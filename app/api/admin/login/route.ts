@@ -1,4 +1,4 @@
-import {env} from 'cloudflare:workers';
+
 import {allowLogin,authConfigured,createSession,sameOrigin,sessionCookie,transportAllowed,verifyPassword} from '../../../lib/admin-auth';
 const noStore={'Cache-Control':'no-store'};
 export async function POST(r:Request){
@@ -12,7 +12,7 @@ export async function POST(r:Request){
   let body;try{body=JSON.parse(raw);}catch{return Response.json({error:'Invalid login details.'},{status:400,headers:noStore});}
   if(typeof body?.email!=='string'||typeof body?.password!=='string'||body.password.length>512)return Response.json({error:'Enter your email and password.'},{status:400,headers:noStore});
   const valid=verifyPassword(body.password);
-  if(body.email.trim().toLowerCase()!==env.ADMIN_EMAIL!.trim().toLowerCase()||!valid)return Response.json({error:'Incorrect email or password.'},{status:401,headers:noStore});
+  if(body.email.trim().toLowerCase()!==process.env.ADMIN_EMAIL!.trim().toLowerCase()||!valid)return Response.json({error:'Incorrect email or password.'},{status:401,headers:noStore});
   const token=await createSession();return Response.json({ok:true},{headers:{...noStore,'Set-Cookie':sessionCookie(r.headers,token)}});
  }catch(e){console.error('Administrator sign-in unavailable',e instanceof Error?e.message:'Storage error');return Response.json({error:'Sign-in is unavailable. Check the local setup or try again shortly.'},{status:503,headers:noStore});}
 }

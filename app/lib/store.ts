@@ -1,9 +1,11 @@
-import { env } from 'cloudflare:workers';
+import { database } from '../../db/adapter';
+import { blobStorage } from './blob-storage';
+const env = process.env;
 import {getAdminUser,sameOrigin,type AdminUser} from './admin-auth';
 export {sameOrigin} from './admin-auth';
 import type { Event, Photo, Release } from './types';
-export function db():D1Database { if(!env.DB)throw new Error('Event storage is unavailable');return env.DB; }
-export function bucket():R2Bucket { if(!env.BUCKET)throw new Error('Photo storage is unavailable');return env.BUCKET; }
+export function db() { return database(); }
+export function bucket() { return blobStorage(); }
 export function isAdmin(user:AdminUser|null){const email=env.ADMIN_EMAIL?.trim().toLowerCase();return !!email&&!!user&&user.email===email;}
 export async function admin(r?:Request){if(!isAdmin(await getAdminUser(r)))return Response.json({error:'Please sign in with the band administrator account.'},{status:403});if(r&&r.method!=='GET'&&!sameOrigin(r))return Response.json({error:'This request must come from your website.'},{status:403});return null;}
 export const noStore={'Cache-Control':'no-store'};
