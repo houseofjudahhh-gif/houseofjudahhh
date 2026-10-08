@@ -1,0 +1,9 @@
+House of Judah — updated password login delivery
+
+TypeScript check passed; production Worker build passed.
+110 local HTTP assertions passed (97 authentication/content checks plus 13 checks of the extracted package): actual supplied password login; incorrect password/email rejection; forged identity header rejection; invalid cookies; Origin checks; persistent login throttling; server-side sign-out and replay rejection; credential revision changes and expiry rejection; draft metadata/media privacy; event CRUD; poster/photo upload bytes; file validation; image replacement/removal; publish/unpublish; recoverable deletion; recording links and thumbnails; invitations.
+Extracted source typecheck/build passed. Fresh pnpm setup and a second idempotent setup passed. The actual pnpm start command from the extracted package loaded credentials; local published events and uploaded photos appeared in the public page/APIs.
+Admin login form visually inspected in browser. Published event saving tested through the backend. Native form validation added to Publish event and errors/notices stay visible while scrolling. Authenticated browser interactions, mobile and hosted HTTPS cookies have not been end-to-end tested.
+Original logo bytes preserved. Display font, license and offline preview included.
+Private local configuration contains a salted password hash and session secret. No plaintext password included. Public client bundle scanned to exclude all private configuration values.
+No website published. New local copy supports login, event publishing and uploads without hosting; data stays on the local computer. Online access needs HTTPS and durable hosted DB/R2 resources.

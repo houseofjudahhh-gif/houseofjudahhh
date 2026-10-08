@@ -1,0 +1,1 @@
+Horizon: requested for the large center hero title. Neue Machina: featured typeface elsewhere. Supply the exact licensed font binaries, place them here, and update their @font-face rules in app/globals.css with relative file URLs and formats. Neither font binary was supplied. Local font detection and fallback are used until then.

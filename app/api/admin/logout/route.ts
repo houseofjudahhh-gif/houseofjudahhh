@@ -1,0 +1,2 @@
+import {sameOrigin,revokeSession,sessionCookie} from '../../../lib/admin-auth';
+export async function POST(r:Request){if(!sameOrigin(r))return Response.json({error:'Sign out through the dashboard.'},{status:403,headers:{'Cache-Control':'no-store'}});try{await revokeSession(r);return Response.json({ok:true},{headers:{'Cache-Control':'no-store','Set-Cookie':sessionCookie(r.headers,'',0)}});}catch{return Response.json({error:'Unable to sign out. Please try again.'},{status:503,headers:{'Cache-Control':'no-store'}});}}
